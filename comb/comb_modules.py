@@ -18,7 +18,7 @@ def exe1(q, a, b):
 
     @always_comb
     def comb():
-        q.next = a
+        q.next = a or (not b)
 
     return instances()
 
@@ -44,7 +44,7 @@ def exe2(q, a, b, c):
 
     @always_comb
     def comb():
-        q.next = a
+        q.next = (not b and not c) or (b and c)
 
     return instances()
 
@@ -72,7 +72,7 @@ def exe3(q, a, b, c, d, e):
 
     @always_comb
     def comb():
-        q.next = a
+        q.next = (a or b) and c and d and e
 
     return instances()
 
@@ -98,7 +98,14 @@ def exe5(leds, sw):
 
     @always_comb
     def comb():
-        pass
+        led0 = sw[0]
+        led1 = sw[1]
+        leds[0].next = led0
+        leds[1].next = led0 and led1
+        leds[2].next = not led1
+        leds[3].next = (not led0 and led1) or (not led1 and led0)
+        for i in range(4,10):
+            leds[i].next = 0
 
     return instances()
 
@@ -107,7 +114,8 @@ def exe5(leds, sw):
 def sw2hex(hex0, sw):
     @always_comb
     def comb():
-        pass
+        sw = sw[0]
+        hex0.next = sw
 
     return instances()
 

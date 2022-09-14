@@ -2,7 +2,6 @@
 
 from myhdl import *
 from .comb_modules import *
-import telemetry
 
 
 def test_exe1():
